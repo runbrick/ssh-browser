@@ -1,0 +1,208 @@
+{
+  "name": "ssh-browser",
+  "displayName": "SSH Browser",
+  "description": "A VSCode extension for connecting to Linux servers via SSH",
+  "version": "1.0.0",
+  "publisher": "your-publisher-name",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-username/ssh-browser.git"
+  },
+  "license": "Apache-2.0",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onView:sshBrowser",
+    "onFileSystem:ssh"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "configuration": {
+      "title": "SSH Browser",
+      "properties": {
+        "sshBrowser.terminal.rightClickBehavior": {
+          "type": "string",
+          "default": "contextMenu",
+          "enum": [
+            "contextMenu",
+            "paste"
+          ],
+          "enumDescriptions": [
+            "Show context menu on right click",
+            "Paste clipboard content on right click"
+          ],
+          "description": "Behavior when right-clicking in SSH terminal"
+        },
+        "sshBrowser.terminal.theme": {
+          "type": "string",
+          "default": "default",
+          "enum": [
+            "default",
+            "dark",
+            "light",
+            "solarizedDark",
+            "solarizedLight"
+          ],
+          "enumDescriptions": [
+            "Follow VSCode theme",
+            "Dark theme",
+            "Light theme",
+            "Solarized Dark",
+            "Solarized Light"
+          ],
+          "description": "Color theme for SSH terminal"
+        },
+        "sshBrowser.fileManager.syncWithTerminal": {
+          "type": "boolean",
+          "default": false,
+          "description": "Automatically navigate file manager to match terminal's current directory"
+        }
+      }
+    },
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "ssh-browser",
+          "title": "SSH Browser",
+          "icon": "$(server)"
+        }
+      ]
+    },
+    "views": {
+      "ssh-browser": [
+        {
+          "id": "sshBrowser",
+          "name": "SSH Connections"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "sshBrowser.addConnection",
+        "title": "SSH: Add New Connection",
+        "icon": "$(add)"
+      },
+      {
+        "command": "sshBrowser.connect",
+        "title": "SSH: Connect to Server",
+        "icon": "$(plug)"
+      },
+      {
+        "command": "sshBrowser.editConnection",
+        "title": "SSH: Edit Connection",
+        "icon": "$(edit)"
+      },
+      {
+        "command": "sshBrowser.deleteConnection",
+        "title": "SSH: Delete Connection",
+        "icon": "$(trash)"
+      },
+      {
+        "command": "sshBrowser.openFileSystem",
+        "title": "SSH: Open File Manager",
+        "icon": "$(files)"
+      },
+      {
+        "command": "sshBrowser.openSession",
+        "title": "SSH: Open SSH Session",
+        "icon": "$(terminal)"
+      },
+      {
+        "command": "sshBrowser.openMonitoring",
+        "title": "SSH: Open Server Monitoring",
+        "icon": "$(dashboard)"
+      },
+      {
+        "command": "sshBrowser.openDocker",
+        "title": "SSH: Open Docker Management",
+        "icon": "$(container)"
+      },
+      {
+        "command": "sshBrowser.refresh",
+        "title": "SSH: Refresh",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "sshBrowser.addGroup",
+        "title": "SSH: Add New Group",
+        "icon": "$(folder-opened)"
+      },
+      {
+        "command": "sshBrowser.renameGroup",
+        "title": "SSH: Rename Group"
+      },
+      {
+        "command": "sshBrowser.deleteGroup",
+        "title": "SSH: Delete Group"
+      }
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "sshBrowser.addConnection",
+          "when": "view == sshBrowser",
+          "group": "navigation@1"
+        },
+        {
+          "command": "sshBrowser.addGroup",
+          "when": "view == sshBrowser",
+          "group": "navigation@2"
+        },
+        {
+          "command": "sshBrowser.refresh",
+          "when": "view == sshBrowser",
+          "group": "navigation@3"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "sshBrowser.renameGroup",
+          "when": "view == sshBrowser && viewItem == sshGroup",
+          "group": "1_actions"
+        },
+        {
+          "command": "sshBrowser.deleteGroup",
+          "when": "view == sshBrowser && viewItem == sshGroup",
+          "group": "1_actions"
+        },
+        {
+          "command": "sshBrowser.editConnection",
+          "when": "view == sshBrowser && viewItem =~ /sshConnection.*/",
+          "group": "2_manage@2"
+        },
+        {
+          "command": "sshBrowser.deleteConnection",
+          "when": "view == sshBrowser && viewItem =~ /sshConnection.*/",
+          "group": "2_manage@3"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js",
+    "package": "npx @vscode/vsce package",
+    "build:vsix": "npm run compile && npx @vscode/vsce package"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "@types/ssh2": "^1.15.5",
+    "@types/vscode": "^1.85.0",
+    "@typescript-eslint/eslint-plugin": "^6.13.0",
+    "@typescript-eslint/parser": "^6.13.0",
+    "eslint": "^8.54.0",
+    "typescript": "^5.3.2"
+  },
+  "dependencies": {
+    "ssh2": "^1.15.0",
+    "ssh2-sftp-client": "^10.0.3"
+  }
+}
