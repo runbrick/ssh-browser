@@ -1,6 +1,11 @@
 # SSH Browser - VSCode Extension
 
+<p align="center">
+  <img src="resources/logo.png" width="128" alt="SSH Browser Logo">
+</p>
+
 SSH Browser is a powerful VSCode extension designed to provide developers with a seamless Linux server management experience. It integrates terminal, file management, system monitoring, and Docker management, all within VSCode.
+
 
 ## 🚀 Key Features
 

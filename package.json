@@ -2,8 +2,9 @@
   "name": "ssh-browser",
   "displayName": "SSH Browser",
   "description": "A VSCode extension for connecting to Linux servers via SSH",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "publisher": "runbrick",
+  "icon": "resources/logo.png",
   "repository": {
     "type": "git",
     "url": "https://github.com/runbrick/ssh-browser"
